@@ -32,9 +32,33 @@ Disney B-facility
 World I-facility
 
 # Preprocessing
-Load data of train_sample and test_sample and schema(combination of all entity tags : Begining and intermediate)
-from visuals we see O tag has highest numbers of count
-Max_length :39 i.e. maximum number of words in a single tweets.
-vacab_size : 25382 i.e. Highest number of unique words in train and test samples.
+Load data of train_sample and test_sample and schema(combination of all entity tags: Beginning and intermediate)
+from the visuals, we see 'O' tag has the highest number count
+Max_length:39 i.e. maximum number of words in a single tweet.
+vacab_size 25382 i.e. Highest number of unique words in train and test samples.
 
 # Train LSTM+CRF model:
+Download Glove 200 dimension Twitter data embedding vector. Which were trained on Twitter data.
+create an all_sentence list containing every sentence word only.
+crf_tokenizer creates a word index based on word frequency after lowering every word in the all_sentence list.
+
+# Embedding Matrix
+prepare an embedding matrix of (21934,200) dimension. put all values 0 where words are not present in the glove vector.
+
+# Create training Datasets
+and create a tag2id dictionary to represent all tags with an id value.
+prepare a one-hot encoding matrix of tags for every sentence with maximum length. Padding to 0 where max len does not meet. And put 0 for all padding. DO it for train and test samples.
+
+# Training model
+Train the model with embedding matrix, 2 bidirectional LSTM, time_distributed dense layer and CRF layer.And then train the model with 300 epochs and train stop early in 81 epoch with val_loss : 0.0033
+Got avg accuracy of the model on the test set is 0.986
+
+# BERT
+Load the Bert base uncased model . Load Bert auto tokenizer i.e. tokenizer for BERT. 
+The tokenizer splits the sentence into tokens and subtokens and puts a unique input ID. These IDs with special tokens like [CLS] (classification) and [SEP] (separator) form the input sequence that is fed into the BERT model for processing. I did it for training and test samples.
+Run the model with 10 epochs in training data and got a fantastic accuracy with 0.99.
+
+
+
+
+
